@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\drawable\airplane.png" />
+    <None Remove="Assets\drawable\caesars.jpg" />
+    <None Remove="Assets\drawable\mahan.jpg" />
+    <None Remove="Assets\drawable\mirage.jpg" />
+    <None Remove="Assets\drawable\venetian.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\drawable\airplane.png" />
+    <EmbeddedResource Include="Assets\drawable\caesars.jpg" />
+    <EmbeddedResource Include="Assets\drawable\mahan.jpg" />
+    <EmbeddedResource Include="Assets\drawable\mirage.jpg" />
+    <EmbeddedResource Include="Assets\drawable\venetian.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xam.Plugin.Iconize" Version="3.5.0.117" />
+    <PackageReference Include="Xam.Plugin.Iconize.FontAwesome" Version="3.5.0.117" />
+    <PackageReference Include="Xam.Plugin.Iconize.Material" Version="3.5.0.117" />
+    <PackageReference Include="Xamarin.Forms" Version="3.5.0.169047" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="FlightList.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Page2.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

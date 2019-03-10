@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:App7;assembly=App7"
+             xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
+             xmlns:local1="clr-namespace:App7"
+             x:Class="App7.Page2">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <Style x:Key="TopSection" TargetType="StackLayout">
+        <Setter Property="BackgroundColor" Value="red"/>
+        <Setter Property="Margin" Value="0,0,0,10"/>
+      </Style>
+      <Style x:Key="baseStyle" TargetType="View">
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+      </Style>
+      <Style x:Key="microLabel" TargetType="Label"  BasedOn="{StaticResource baseStyle}">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="TextColor" Value="white"/>
+      </Style>
+      <Style x:Key="smallLabel" TargetType="Label"  BasedOn="{StaticResource baseStyle}">
+        <Setter Property="FontSize" Value="Small"/>
+        <Setter Property="TextColor" Value="white"/>
+      </Style>
+      <Style x:Key="mediumLabel" TargetType="Label"  BasedOn="{StaticResource baseStyle}">
+        <Setter Property="FontSize" Value="Medium"/>
+        <Setter Property="TextColor" Value="white"/>
+      </Style>
+      <Style x:Key="largeLabel" TargetType="Label"  BasedOn="{StaticResource baseStyle}">
+        <Setter Property="FontSize" Value="Large"/>
+        <Setter Property="TextColor" Value="white"/>
+      </Style>
+      <Style x:Key="baseButton" TargetType="Button"  BasedOn="{StaticResource baseStyle}">
+        <Setter Property="BorderColor" Value="white"/>
+        <Setter Property="BorderWidth" Value="1"/>
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+        <Setter Property="TextColor" Value="white"/>
+      </Style>
+      <Style x:Key="SecondRowLabel" TargetType="Label" BasedOn="{StaticResource microLabel}">
+        <Setter Property="TextColor" Value="red"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+      </Style>
+      <Style x:Key="SecondRowValue" TargetType="Label" BasedOn="{StaticResource microLabel}">
+        <Setter Property="TextColor" Value="black"/>
+      </Style>
+      <Style x:Key="SecondRowGreenValue" TargetType="Label" BasedOn="{StaticResource microLabel}">
+        <Setter Property="TextColor" Value="green"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+      </Style>
+      <Style x:Key="margnedStackLayout" TargetType="StackLayout">
+        <Setter Property="Margin" Value="25,0,20,0"/>
+      </Style>
+      <local1:StatusToIconConvertor x:Key="StatusToIconConvertor"></local1:StatusToIconConvertor>
+      <local1:TestConverter x:Key="TestConverter"></local1:TestConverter>
+    </ResourceDictionary>
+
+  </ContentPage.Resources>
+  <ContentPage.Content>
+    <Grid ColumnSpacing="1" >
+      <Grid.RowDefinitions>
+        <RowDefinition Height="55*"/>
+        <RowDefinition Height="5*" />
+        <RowDefinition Height="35*"/>
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="20*"/>
+        <ColumnDefinition Width="20*"/>
+        <ColumnDefinition Width="20*"/>
+        <ColumnDefinition Width="20*"/>
+        <ColumnDefinition Width="20*"/>
+      </Grid.ColumnDefinitions>
+
+      <!-- First Row-->
+      <StackLayout  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Style="{StaticResource TopSection}">
+        <Label Text="It's go time" Style="{StaticResource mediumLabel}"/>
+        <Label Text="Boarding 8:20 PM at GateB79" Style="{StaticResource microLabel}"/>
+        <Label Text="SFO -> LAX" Style="{StaticResource largeLabel}"/>
+        <Button Text="VIEW BOARDING PASS" Style="{StaticResource baseButton}" Clicked="FlightListClicked"/>
+        <Label Text="All flights" Style="{StaticResource microLabel}"/>
+      </StackLayout>
+
+      <!-- Second  Row-->
+      <StackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" x:Name="flightInfoBox" Orientation="Horizontal" >
+        <StackLayout Style="{StaticResource margnedStackLayout}">
+          <Label Text="Term" Style="{StaticResource SecondRowLabel}"/>
+          <Label Text="{Binding Term}" Style="{StaticResource SecondRowValue}"/>
+        </StackLayout>
+        <StackLayout Style="{StaticResource margnedStackLayout}">
+          <Label Text="GATE" Style="{StaticResource SecondRowLabel}"/>
+          <Label Text="{Binding Gate}" Style="{StaticResource SecondRowValue}"/>
+        </StackLayout>
+        <StackLayout Style="{StaticResource margnedStackLayout}">
+          <Label Text="SEAT" Style="{StaticResource SecondRowLabel}"/>
+          <Label Text="{Binding Seat}" Style="{StaticResource SecondRowValue}"/>
+        </StackLayout>
+        <StackLayout Style="{StaticResource margnedStackLayout}">
+          <Label Text="DEPART" Style="{StaticResource SecondRowLabel}"/>
+          <Label Text="{Binding Depart}" Style="{StaticResource SecondRowValue}"/>
+        </StackLayout>
+        <StackLayout  Style="{StaticResource margnedStackLayout}">
+          <Label Text="" />
+          <StackLayout Orientation="Horizontal">
+            <iconize:IconLabel Text="{Binding Path=Status, Converter={StaticResource StatusToIconConvertor}}"   Style="{StaticResource SecondRowGreenValue}" />
+            <Label Text="{Binding Status}" Style="{StaticResource SecondRowGreenValue}"/>
+          </StackLayout>
+        </StackLayout>
+      </StackLayout>
+
+      <!-- Third Row - List View-->
+      <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5"  x:Name="actionsListView"  RowHeight="70" Margin="10,20,10,10" SeparatorVisibility="Default">
+        <ListView.ItemTemplate >
+          <DataTemplate>
+            <ViewCell>
+              <StackLayout Orientation="Horizontal" >
+                <!--<Image Source="{local:ImageResource App7.Assets.drawable.airplane.png}" WidthRequest="30" HeightRequest="30" BackgroundColor="transparent" VerticalOptions="Center"/>-->
+                <iconize:IconButton Text="{Binding Image}" FontSize="26" BackgroundColor="white" />
+                <Label Text="{Binding Title}" VerticalOptions="Center"/>
+              </StackLayout>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+
+    </Grid>
+  </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
+             x:Class="App7.FlightList"
+             >
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="centerAligned" TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+            </Style>
+            <Style x:Key="tinyText" TargetType="Label" BasedOn="{StaticResource centerAligned}">
+                <Setter Property="FontSize" Value="Micro"/>
+                <Setter Property="TextColor" Value="Gray"/>
+            </Style>
+            <Style x:Key="boldText" TargetType="Label" BasedOn="{StaticResource centerAligned}">
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </Style>
+            <Style x:Key="flightStatus" TargetType="Label" BasedOn="{StaticResource centerAligned}">
+                <Setter Property="TextColor" Value="lightGreen"/>
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="FontAttributes" Value="bold"/>
+                <Style.Triggers>
+                    <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Delayed">
+                        <Setter Property="TextColor" Value="Red"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="lightGray">
+            <ListView  x:Name="listView" HasUnevenRows="True" SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame x:Name="frame" CornerRadius="10" BackgroundColor="white"  Padding="2,7,2,7" Margin="5,5,5,5">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="2*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- First Row-->
+                                    <!--<Image Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Source="{local:ImageResource App7.Assets.drawable.mahan.jpg}" WidthRequest="150" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Start"/>-->
+                                    <iconize:IconButton Grid.Row="0" Grid.Column="0" Text="md-public" FontSize="40" BackgroundColor="white"  TextColor="DarkBlue"/>
+
+                                    <Label  Grid.Row="0" Grid.Column="3" Text="{Binding Status}" TextColor="Green" Style ="{StaticResource flightStatus}"/>
+
+                                    <!-- Second Row-->
+                                    <Label Grid.Row="1" Grid.Column="0" Text="{Binding FlightNumber}" Style="{StaticResource tinyText}"/>
+                                    <Label Grid.Row="1" Grid.Column="1" Text="STA" Style="{StaticResource tinyText}"/>
+                                    <Label Grid.Row="1" Grid.Column="2" Text="ETA" Style="{StaticResource tinyText}"/>
+                                    <Label Grid.Row="1" Grid.Column="3" Text="Terminal" Style="{StaticResource tinyText}"/>
+
+                                    <!-- Third Row-->
+                                    <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource boldText}" Text="{Binding DepartureAirport}"></Label>
+                                    <Label Grid.Row="2" Grid.Column="1" Style="{StaticResource boldText}" Text="{Binding STA}"></Label>
+                                    <Label Grid.Row="2" Grid.Column="2" Style="{StaticResource boldText}" Text="{Binding ETA}"></Label>
+                                    <Label Grid.Row="2" Grid.Column="3" Style="{StaticResource boldText}" Text="{Binding Terminal}"></Label>
+
+                                </Grid>
+
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
